@@ -84,3 +84,9 @@ footer {
   text-align: center;
   font-size: 10px;
 }
+
+@media (max-width: 600px) {
+  .container {
+    width: 80%;
+  }
+}
