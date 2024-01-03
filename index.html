@@ -4,37 +4,50 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
     <title>Tepo Loapi</title>
   </head>
   <body>
-    <header>
-      <form>
-        <input
-          type="search"
-          id="search-area"
-          required
-          placeholder="Enter a city"
-        />
-        <input type="button" value="Search" />
-      </form>
-    </header>
-    <main>
-      <h1>Gaborone</h1>
-      <div>
-        <p>
-          Wednesday 15:59
-          <br />
-          Humidity: 67% | Wind Speed: 3.0km/h
-        </p>
-      </div>
-      <div>☀27&deg;C</div>
-    </main>
-    <footer>
-      This page was coded by
-      <a href="https://github.com/Botlhe-M">Botlhe Mogolthwane</a>. The code is
-      hosted on <a href="https://github.com/Botlhe-M/tepoLoapi">Github</a> and
-      the website is hosted on
-      <a href="https://tepoloapi.netlify.app/">Netlify</a>
-    </footer>
+    <div class="container">
+      <header>
+        <form>
+          <input
+            type="search"
+            id="search-area"
+            required
+            placeholder="Enter a city"
+          />
+          <input type="button" value="Search" />
+        </form>
+      </header>
+      <main>
+        <h1>Gaborone current weather</h1>
+        <div>
+          <p>
+            Wednesday 15:59
+            <br />
+            Humidity: 67% | Wind Speed: 3.0km/h
+          </p>
+        </div>
+        <div>
+          ☀27&deg;C <br />
+          RealFeel: 30&deg;C
+        </div>
+      </main>
+      <footer>
+        This page was coded by
+        <a href="https://github.com/Botlhe-M">Botlhe Mogolthwane</a>. The code
+        is hosted on
+        <a href="https://github.com/Botlhe-M/tepoLoapi">Github</a> and the
+        website is hosted on
+        <a href="https://tepoloapi.netlify.app/">Netlify</a>
+      </footer>
+    </div>
   </body>
 </html>
