@@ -27,12 +27,12 @@ function showWeather(response) {
   let description = document.querySelector("#description");
   let imgIcon = document.querySelector("#weather-icon");
 
-  // Updating the DOM with new data
   temperature.innerHTML = Math.round(currentTemperature);
   humidity.innerHTML = `${currentHumidity}%`;
   feelsLike.innerHTML = `RealFeel: ${Math.round(feelsLikeTemperature)}°C`;
   windSpeed.innerHTML = `${currentWindSpeed} km/h`;
-  description.innerHTML = `,${currentDescription}`;
+  description.innerHTML = `${currentDescription}`;
+  imgIcon.src = iconUrl;
 }
 function updateTime(date) {
   let hours = date.getHours();
