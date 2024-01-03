@@ -52,7 +52,9 @@ main {
   line-height: 20px;
   color: rgba(39, 33, 66, 0.4);
 }
-.weather-details span {
+#description,
+#humidity,
+#wind-speed {
   color: #f65382;
 }
 .weather-temperature {
