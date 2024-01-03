@@ -29,12 +29,16 @@ function showWeather(response) {
 
   temperature.innerHTML = `${Math.round(currentTemperature)}°`;
   humidity.innerHTML = `${currentHumidity}%`;
-  feelsLike.innerHTML = `RealFeel: ${Math.round(feelsLikeTemperature)}°C`;
-  windSpeed.innerHTML = `${currentWindSpeed} km/h`;
+  feelsLike.innerHTML = `FeelsLike: ${Math.round(feelsLikeTemperature)}°C`;
+  windSpeed.innerHTML = `${currentWindSpeed} m/s`;
   description.innerHTML = `${currentDescription}`;
   imgIcon.src = iconUrl;
+
+  getForecast(response.data.city);
 }
-function updateTime(date) {
+function updateTime() {
+  let date = new Date();
+  console.log(date);
   let hours = date.getHours();
   let minutes = date.getMinutes();
   let day = updateDay(date);
@@ -45,7 +49,8 @@ function updateTime(date) {
   let timeDisplay = document.querySelector("#time");
   timeDisplay.innerHTML = `${day} ${time}`;
 }
-function updateDay(date) {
+function updateDay() {
+  let date = new Date();
   let dayOfTheWeek = [
     "Sunday",
     "Monday",
@@ -58,35 +63,41 @@ function updateDay(date) {
   let weekDay = dayOfTheWeek[date.getDay()];
   return weekDay;
 }
-function displayForecast() {
-  let days = ["Thur", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"];
+function getForecast(city) {
+  let apiKey = "a23921o2t3f0b57e86a4e973079a01b8";
+  let url = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
+  axios.get(url).then(displayForecast);
+}
+function displayForecast(response) {
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
   let forecastElement = "";
 
-  days.forEach(function (day) {
-    forecastElement += `
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      forecastElement += `
       <div class="weather-forecast-day">
           <div class="weather-forecast-date">
-            ${day}
+            ${days[index]}
           </div>
-          <div class="weather-forcast-icon">
-           <img
-             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAAYxJREFUaN7tmMERgyAQRS2BEizBEizBEiyBEizBEizBEiyB679Zgh1sLpsMIRgRAZOZdeYfNBPY94FdoCKi6p9VCYAACIAACIAAvF5OPgAUgBHACoAsrfxdVQmfpAAAOgCbE7irDUD3cwAA+oPAXXW3AABoAczs5MKuqwDnfSOhigJwsG4gDc9titDA/x8cNbkAPhbmzvcUMiEgwQDslNvJwr9RRvWpAFpP4xOAOjMAfRuJIAArt3vTYQEAEw3Awa8e55WVkeiuUQgBmD2ZQxUM/NVvLIDPeVM4+CQA603OXwZ4uq13MlEpLVah0wDqUADNDdzp/p7Gs5WYflDTvwMQgP4OgM2ey1zRdcSulgCY0gDGKoQTL9CJ3+00vbAO24zdjcY6rzhg78LcOabOKQCGBAAh6bhnwM0poNNVABU5R23V3wI5qAN7/ZszR8rOc4IKFrexXIDvPe22ya5VDq5bngs2dhTbrNcqBwAmUQIYiwNk2EPp0gBNrp2pXO4KgAAIgAAIgAAIgAC86wECCuvGtH3EIQAAAABJRU5ErkJggg=="
-              alt=""
+          <img
+             src= ${day.condition.icon_url} class="weather-forecast-icon"
               width="40px"
             />
-          </div>
-          <div class="weather-forecast-temperature"> <strong>18&deg;C </strong></div>
-          <div class="weather-forecast-temperature">12&deg;C</div>
-      </div>
+          <span class="weather-forecast-temperature"> <strong>${Math.round(
+            day.temperature.maximum
+          )}&deg;C </strong></span>
+          <span class="weather-forecast-temperature">${Math.round(
+            day.temperature.minimum
+          )}&deg;C</div>
+      </span>
       `;
+    }
   });
   let weatherForecast = document.querySelector("#weather-forecast");
   weatherForecast.innerHTML = forecastElement;
 }
-let date = new Date();
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", handleSearchSubmission);
 let searchButton = document.querySelector("#search-form-btn");
 searchButton.addEventListener("click", handleSearchSubmission);
-updateTime(date);
-displayForecast();
+updateTime();
