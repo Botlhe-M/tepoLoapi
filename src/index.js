@@ -86,5 +86,7 @@ function displayForecast() {
 let date = new Date();
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", handleSearchSubmission);
+let searchButton = document.querySelector("#search-form-btn");
+searchButton.addEventListener("click", handleSearchSubmission);
 updateTime(date);
 displayForecast();
