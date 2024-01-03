@@ -14,7 +14,7 @@ a {
   background-color: #ffffff;
   max-width: 600px;
   margin: 40px auto;
-  padding: 40px;
+  padding: 40px 20px;
   box-shadow: 0 30px 50px rgba(65, 50, 100, 0.08);
   border-radius: 20px;
 }
@@ -76,10 +76,12 @@ main {
   padding: 0 0 15px;
   font-size: 25px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .weather-forecast {
   text-align: center;
+  display: flex;
+  justify-content: space-around;
 }
 footer {
   padding: 30px 0 0 0;
@@ -105,9 +107,5 @@ footer {
   }
   footer {
     font-size: 8px;
-  }
-  .weather-feel-value {
-    align-items: flex-end;
-    justify-content: space-between;
   }
 }

@@ -39,7 +39,7 @@ function updateTime(date) {
   let minutes = date.getMinutes();
   let day = updateDay(date);
   if (minutes < 10) {
-    minutes = `0${minners}`;
+    minutes = `0${minutes}`;
   }
   let time = `${hours}:${minutes}`;
   let timeDisplay = document.querySelector("#time");
@@ -58,7 +58,33 @@ function updateDay(date) {
   let weekDay = dayOfTheWeek[date.getDay()];
   return weekDay;
 }
+function displayForecast() {
+  let days = ["Thur", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"];
+  let forecastElement = "";
+
+  days.forEach(function (day) {
+    forecastElement += `
+      <div class="weather-forecast-day">
+          <div class="weather-forecast-date">
+            ${day}
+          </div>
+          <div class="weather-forcast-icon">
+           <img
+             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAAYxJREFUaN7tmMERgyAQRS2BEizBEizBEiyBEizBEizBEiyB679Zgh1sLpsMIRgRAZOZdeYfNBPY94FdoCKi6p9VCYAACIAACIAAvF5OPgAUgBHACoAsrfxdVQmfpAAAOgCbE7irDUD3cwAA+oPAXXW3AABoAczs5MKuqwDnfSOhigJwsG4gDc9titDA/x8cNbkAPhbmzvcUMiEgwQDslNvJwr9RRvWpAFpP4xOAOjMAfRuJIAArt3vTYQEAEw3Awa8e55WVkeiuUQgBmD2ZQxUM/NVvLIDPeVM4+CQA603OXwZ4uq13MlEpLVah0wDqUADNDdzp/p7Gs5WYflDTvwMQgP4OgM2ey1zRdcSulgCY0gDGKoQTL9CJ3+00vbAO24zdjcY6rzhg78LcOabOKQCGBAAh6bhnwM0poNNVABU5R23V3wI5qAN7/ZszR8rOc4IKFrexXIDvPe22ya5VDq5bngs2dhTbrNcqBwAmUQIYiwNk2EPp0gBNrp2pXO4KgAAIgAAIgAAIgAC86wECCuvGtH3EIQAAAABJRU5ErkJggg=="
+              alt=""
+              width="40px"
+            />
+          </div>
+          <div class="weather-forecast-temperature"> <strong>18&deg;C </strong></div>
+          <div class="weather-forecast-temperature">12&deg;C</div>
+      </div>
+      `;
+  });
+  let weatherForecast = document.querySelector("#weather-forecast");
+  weatherForecast.innerHTML = forecastElement;
+}
 let date = new Date();
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", handleSearchSubmission);
 updateTime(date);
+displayForecast();
