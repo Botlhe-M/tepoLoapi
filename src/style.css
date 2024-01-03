@@ -89,4 +89,20 @@ footer {
   .container {
     width: 80%;
   }
+  .search-form-input {
+    width: 50%;
+  }
+  .weather-icon {
+    font-size: 32px;
+  }
+  .weather-temperature-value {
+    font-size: 48px;
+  }
+  footer {
+    font-size: 8px;
+  }
+  .weather-feel-value {
+    align-items: start;
+    justify-content: space-between;
+  }
 }
