@@ -16,10 +16,11 @@
   <body>
     <div class="container">
       <header>
-        <form class="search-form">
+        <form class="search-form" id="search-form">
           <input
             type="search"
             class="search-form-input"
+            id="search-form-input"
             required
             placeholder="Enter a city"
           />
@@ -29,7 +30,7 @@
       <main>
         <div class="weather-data">
           <div>
-            <h1 class="weather-city">Gaborone weather</h1>
+            <h1 class="weather-city" id="city">Gaborone weather</h1>
             <p class="weather-details">
               Wednesday 15:59
               <br />
@@ -53,5 +54,6 @@
         <a href="https://tepoloapi.netlify.app/">Netlify</a>
       </footer>
     </div>
+    <script src="src/index.js"></script>
   </body>
 </html>
