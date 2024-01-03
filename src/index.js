@@ -27,7 +27,7 @@ function showWeather(response) {
   let description = document.querySelector("#description");
   let imgIcon = document.querySelector("#weather-icon");
 
-  temperature.innerHTML = Math.round(currentTemperature);
+  temperature.innerHTML = `${Math.round(currentTemperature)}°`;
   humidity.innerHTML = `${currentHumidity}%`;
   feelsLike.innerHTML = `RealFeel: ${Math.round(feelsLikeTemperature)}°C`;
   windSpeed.innerHTML = `${currentWindSpeed} km/h`;

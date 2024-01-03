@@ -93,7 +93,9 @@ footer {
     width: 50%;
   }
   .weather-icon {
-    font-size: 32px;
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
   }
   .weather-temperature-value {
     font-size: 48px;
@@ -102,7 +104,7 @@ footer {
     font-size: 8px;
   }
   .weather-feel-value {
-    align-items: start;
+    align-items: flex-end;
     justify-content: space-between;
   }
 }
