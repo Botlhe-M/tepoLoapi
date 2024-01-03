@@ -16,30 +16,34 @@
   <body>
     <div class="container">
       <header>
-        <form>
+        <form class="search-form">
           <input
             type="search"
-            id="search-area"
+            class="search-form-input"
             required
             placeholder="Enter a city"
           />
-          <input type="button" value="Search" />
+          <input type="button" value="Search" class="search-form-btn" />
         </form>
       </header>
       <main>
-        <h1>Gaborone current weather</h1>
-        <div>
-          <p>
-            Wednesday 15:59
-            <br />
-            Humidity: 67% | Wind Speed: 3.0km/h
-          </p>
-        </div>
-        <div>
-          ☀27&deg;C <br />
-          RealFeel: 30&deg;C
+        <div class="weather-data">
+          <div>
+            <h1 class="weather-city">Gaborone weather</h1>
+            <p class="weather-details">
+              Wednesday 15:59
+              <br />
+              Humidity: <span> 67%</span> | Wind Speed: <span> 3.0km/h</span>
+            </p>
+          </div>
+          <div class="weather-temperature">
+            <div class="weather-icon">☀</div>
+            <div class="weather-temperature-value">27&deg;</div>
+            <div class="weather-unit">C</div>
+          </div>
         </div>
       </main>
+      <span class="weather-feel-value">RealFeel: 30&deg;C</span>
       <footer>
         This page was coded by
         <a href="https://github.com/Botlhe-M">Botlhe Mogolthwane</a>. The code
