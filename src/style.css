@@ -54,7 +54,8 @@ main {
 }
 #description,
 #humidity,
-#wind-speed {
+#wind-speed,
+.weather-forecast-temperature {
   color: #f65382;
 }
 .weather-temperature {

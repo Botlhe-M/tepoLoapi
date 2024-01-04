@@ -19,6 +19,7 @@ function showWeather(response) {
   let currentWindSpeed = response.data.wind.speed;
   let currentDescription = response.data.condition.description;
   let iconUrl = response.data.condition.icon_url;
+  let date = new Date(response.data.time * 1000);
 
   let temperature = document.querySelector("#weather-temperature-value");
   let humidity = document.querySelector("#humidity");
@@ -26,7 +27,9 @@ function showWeather(response) {
   let windSpeed = document.querySelector("#wind-speed");
   let description = document.querySelector("#description");
   let imgIcon = document.querySelector("#weather-icon");
+  let timeDisplay = document.querySelector("#time");
 
+  timeDisplay.innerHTML = updateTime(date);
   temperature.innerHTML = `${Math.round(currentTemperature)}°`;
   humidity.innerHTML = `${currentHumidity}%`;
   feelsLike.innerHTML = `FeelsLike: ${Math.round(feelsLikeTemperature)}°C`;
@@ -36,21 +39,9 @@ function showWeather(response) {
 
   getForecast(response.data.city);
 }
-function updateTime() {
-  let date = new Date();
-  console.log(date);
+function updateTime(date) {
   let hours = date.getHours();
   let minutes = date.getMinutes();
-  let day = updateDay(date);
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  let time = `${hours}:${minutes}`;
-  let timeDisplay = document.querySelector("#time");
-  timeDisplay.innerHTML = `${day} ${time}`;
-}
-function updateDay() {
-  let date = new Date();
   let dayOfTheWeek = [
     "Sunday",
     "Monday",
@@ -61,7 +52,11 @@ function updateDay() {
     "Saturday",
   ];
   let weekDay = dayOfTheWeek[date.getDay()];
-  return weekDay;
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  let time = `${hours}:${minutes}`;
+  return `${weekDay} ${time}`;
 }
 function getForecast(city) {
   let apiKey = "a23921o2t3f0b57e86a4e973079a01b8";
@@ -100,4 +95,3 @@ let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", handleSearchSubmission);
 let searchButton = document.querySelector("#search-form-btn");
 searchButton.addEventListener("click", handleSearchSubmission);
-updateTime();
