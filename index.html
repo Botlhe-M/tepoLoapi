@@ -17,7 +17,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Tepo Loapi</title>
   </head>
   <body>
@@ -42,13 +42,13 @@
       <main>
         <div class="weather-data">
           <div>
-            <h1 class="weather-city" id="city">Gaborone weather</h1>
+            <h1 class="weather-city" id="city"></h1>
             <p class="weather-details">
-              <span class="time" id="time"> Wednesday 15:59,</span>
+              <span class="time" id="time"> ,</span>
               <span id="description">windy</span>
               <br />
-              Humidity: <span id="humidity"> 67%</span> | Wind Speed:
-              <span id="wind-speed"> 3.0m/s</span>
+              Humidity: <span id="humidity"> </span> | Wind Speed:
+              <span id="wind-speed"> m/s</span>
             </p>
           </div>
           <div class="weather-temperature">
@@ -57,14 +57,14 @@
               class="weather-temperature-value"
               id="weather-temperature-value"
             >
-              27&deg;
+              &deg;
             </div>
             <div class="weather-unit">C</div>
           </div>
         </div>
       </main>
       <span class="weather-feel-value" id="weather-feel-like-value"
-        >FeelsLike: 30&deg;C</span
+        >FeelsLike: &deg;C</span
       >
       <div class="weather-forecast" id="weather-forecast"></div>
       <footer>
@@ -76,6 +76,6 @@
         <a href="https://tepoloapi.netlify.app/">Netlify</a>
       </footer>
     </div>
-    <script src="src/index.js"></script>
+    <script defer src="src/index.js"></script>
   </body>
 </html>
