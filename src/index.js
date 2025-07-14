@@ -1,165 +1,102 @@
-function handleSearchSubmission(event) {
-  event.preventDefault();
-  let searchInput = document.querySelector("#search-form-input");
-  let city = searchInput.value;
-  let cityToUpdate = document.querySelector("#city");
-  cityToUpdate.innerHTML = `${city} weather`;
-  searchCity(city);
+// --- Refactored JavaScript Code ---
+
+function changeBackground(condition) {
+    let backgroundUrl = "";
+    const description = condition.toLowerCase();
+
+    if (description.includes("clear") || description.includes("sun")) {
+        backgroundUrl = "https://images.unsplash.com/photo-1590055531615-f1624a7243c5?w=800";
+    } else if (description.includes("clouds")) {
+        backgroundUrl = "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=800";
+    } else if (description.includes("rain") || description.includes("drizzle")) {
+        backgroundUrl = "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800";
+    } else if (description.includes("snow")) {
+        backgroundUrl = "https://images.unsplash.com/photo-1542601098-8fc114e1937b?w=800";
+    } else if (description.includes("thunderstorm")) {
+        backgroundUrl = "https://images.unsplash.com/photo-1605727226503-92a5aa4a4344?w=800";
+    } else {
+        // Default background
+        backgroundUrl = "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800";
+    }
+    document.body.style.backgroundImage = `url('${backgroundUrl}')`;
+}
+
+function displayWeatherData(response) {
+    const data = response.data;
+    const date = new Date(data.time * 1000);
+
+    document.querySelector("#city").innerHTML = data.city;
+    document.querySelector("#time").innerHTML = formatDate(date);
+    document.querySelector("#description").innerHTML = data.condition.description;
+    document.querySelector("#humidity").innerHTML = `${data.temperature.humidity}%`;
+    document.querySelector("#wind-speed").innerHTML = `${data.wind.speed} km/h`;
+    document.querySelector("#feels-like").innerHTML = `${Math.round(data.temperature.feels_like)}°`;
+    document.querySelector("#weather-temperature-value").innerHTML = Math.round(data.temperature.current);
+    document.querySelector("#weather-icon").src = data.condition.icon_url;
+
+    changeBackground(data.condition.description);
+    getForecast(data.city);
+}
+
+function formatDate(date) {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const day = days[date.getDay()];
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+    return `${day} ${hours}:${minutes}`;
 }
 
 function searchCity(city) {
-  let apiKey = "a23921o2t3f0b57e86a4e973079a01b8";
-  let url = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-  axios.get(url).then(showWeather);
+    const apiKey = "a23921o2t3f0b57e86a4e973079a01b8";
+    const apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayWeatherData).catch(err => alert("City not found. Please try again."));
 }
-function showWeather(response) {
-  let currentTemperature = response.data.temperature.current;
-  let currentHumidity = response.data.temperature.humidity;
-  let feelsLikeTemperature = response.data.temperature.feels_like;
-  let currentWindSpeed = response.data.wind.speed;
-  let currentDescription = response.data.condition.description;
-  let iconUrl = response.data.condition.icon_url;
-  let date = new Date(response.data.time * 1000);
 
-  let temperature = document.querySelector("#weather-temperature-value");
-  let humidity = document.querySelector("#humidity");
-  let feelsLike = document.querySelector("#weather-feel-like-value");
-  let windSpeed = document.querySelector("#wind-speed");
-  let description = document.querySelector("#description");
-  let imgIcon = document.querySelector("#weather-icon");
-  let timeDisplay = document.querySelector("#time");
+function handleSearchSubmission(event) {
+    event.preventDefault();
+    const searchInput = document.querySelector("#search-form-input");
+    searchCity(searchInput.value);
+}
 
-  timeDisplay.innerHTML = updateTime(date);
-  temperature.innerHTML = `${Math.round(currentTemperature)}°`;
-  humidity.innerHTML = `${currentHumidity}%`;
-  feelsLike.innerHTML = `FeelsLike: ${Math.round(feelsLikeTemperature)}°C`;
-  windSpeed.innerHTML = `${currentWindSpeed} m/s`;
-  description.innerHTML = `${currentDescription}`;
-  imgIcon.src = iconUrl;
-
-  getForecast(response.data.city);
-}
-function updateTime(date) {
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let dayOfTheWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  let weekDay = dayOfTheWeek[date.getDay()];
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  let time = `${hours}:${minutes}`;
-  return `${weekDay} ${time}`;
-}
-function getForecast(city) {
-  let apiKey = "a23921o2t3f0b57e86a4e973079a01b8";
-  let url = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
-  axios.get(url).then(displayForecast);
-}
 function displayForecast(response) {
-  let days = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thur",
-    "Fri",
-    "Sat",
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thur",
-    "Fri",
-    "Sat",
-  ];
-  let todayDate = new Date();
-  let currentDay = todayDate.getDay();
-  let forecastElement = "";
-
-  response.data.daily.forEach(function (day, index) {
-    if (index < 5) {
-      forecastElement += `
-      <div class="weather-forecast-day">
-          <div class="weather-forecast-date">
-            ${days[currentDay + index + 1]}
-          </div>
-          <img
-             src= ${day.condition.icon_url} class="weather-forecast-icon"
-              width="40px"
-            />
-          <span class="weather-forecast-temperature"> <strong>${Math.round(
-            day.temperature.maximum
-          )}&deg;C </strong></span>
-          <span class="weather-forecast-temperature">${Math.round(
-            day.temperature.minimum
-          )}&deg;C</div>
-      </span>
-      `;
-    }
-  });
-  let weatherForecast = document.querySelector("#weather-forecast");
-  weatherForecast.innerHTML = forecastElement;
+    let forecastHtml = "";
+    response.data.daily.forEach(function(day, index) {
+        if (index > 0 && index < 6) { // Get next 5 days
+            forecastHtml += `
+                <div class="weather-forecast-day">
+                    <div class="weather-forecast-date">${formatDay(day.time)}</div>
+                    <img src="${day.condition.icon_url}" class="weather-forecast-icon" />
+                    <div class="weather-forecast-temperatures">
+                        <span class="weather-forecast-temperature-max">
+                            <strong>${Math.round(day.temperature.maximum)}°</strong>
+                        </span>
+                        <span class="weather-forecast-temperature-min">${Math.round(day.temperature.minimum)}°</span>
+                    </div>
+                </div>`;
+        }
+    });
+    document.querySelector("#weather-forecast").innerHTML = forecastHtml;
 }
 
-// show data of current location automatically
-function getCoordinates() {
-  let apiKey = "a23921o2t3f0b57e86a4e973079a01b8";
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (showPosition) => {
-        let url = `https://api.shecodes.io/weather/v1/current?lon=${showPosition.coords.longitude}&lat=${showPosition.coords.latitude}&key=${apiKey}`;
-        axios.get(url).then(showCurrentWeather);
-      },
-      (err) => {
-        alert(err.message);
-      }
-    );
-  } else {
-    alert("Geolocation is not supported by this browser.");
-  }
+function formatDay(timestamp) {
+    const date = new Date(timestamp * 1000);
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return days[date.getDay()];
 }
 
-function showCurrentWeather(response) {
-  let currentTemperature = response.data.temperature.current;
-  let currentHumidity = response.data.temperature.humidity;
-  let feelsLikeTemperature = response.data.temperature.feels_like;
-  let currentWindSpeed = response.data.wind.speed;
-  let currentDescription = response.data.condition.description;
-  let iconUrl = response.data.condition.icon_url;
-  let currentCity = response.data.city;
-  let timeDisplay = document.querySelector("#time");
-  let date = new Date(response.data.time * 1000);
-
-  timeDisplay.innerHTML = updateTime(date);
-  let temperature = document.querySelector("#weather-temperature-value");
-  let city = document.querySelector("#city");
-  let humidity = document.querySelector("#humidity");
-  let feelsLike = document.querySelector("#weather-feel-like-value");
-  let windSpeed = document.querySelector("#wind-speed");
-  let description = document.querySelector("#description");
-  let imgIcon = document.querySelector("#weather-icon");
-
-  // Show the data on the page
-  city.innerHTML = `${currentCity} weather`;
-  temperature.innerHTML = `${Math.round(currentTemperature)}°`;
-  humidity.innerHTML = `${currentHumidity}%`;
-  feelsLike.innerHTML = `FeelsLike: ${Math.round(feelsLikeTemperature)}°C`;
-  windSpeed.innerHTML = `${currentWindSpeed} m/s`;
-  description.innerHTML = `${currentDescription}`;
-  imgIcon.src = iconUrl;
+function getForecast(city) {
+    const apiKey = "a23921o2t3f0b57e86a4e973079a01b8";
+    const apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayForecast);
 }
 
-let searchForm = document.querySelector("#search-form");
-searchForm.addEventListener("submit", handleSearchSubmission);
-let searchButton = document.querySelector("#search-form-btn");
-searchButton.addEventListener("click", handleSearchSubmission);
+// Event Listener
+const searchFormElement = document.querySelector("#search-form");
+searchFormElement.addEventListener("submit", handleSearchSubmission);
 
-getCoordinates();
+// Initial Load - Set a default city
+searchCity("Gaborone");
